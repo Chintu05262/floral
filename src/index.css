@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Belleza&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bellefair&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Belleza", sans-serif;
+
+}
+
+:root {
+  --white-color: #fff;
+  --black-color: #1d1d1d;
+  --main-color: #677a38;
+  --bg-light: #fbf7ff;
+  --grey-color: #6c6c6c;
+}
+
+h1,
+h1 span,
+h2,
+h2 span,
+h3,
+h3 span {
+  font-family: "Bellefair", serif;
+
+}
+
+ul {
+  padding-left: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+li {
+  list-style: none !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-bottom: 0 !important;
+}
+
+.global_btn {
+  background-color: var(--main-color);
+  padding: 10px 22px;
+  border-radius: 5px;
+  color: var(--white-color);
+  font-weight: 500;
+  font-size: 17px;
+  text-transform: capitalize;
+  border: none;
+  outline: none;
+}
+
+.global_content {
+  margin-top: 3rem;
+}
+
+.myBtn {
+  margin-top: 2rem;
+}
+
+@media(max-width:768px) {
+  .global_content {
+    margin-top: 2rem;
+  }
+
+  .global_btn {
+    padding: 8px 16px;
+    font-size: 15px;
+  }
+}
