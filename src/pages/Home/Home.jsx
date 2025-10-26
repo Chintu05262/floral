@@ -1,5 +1,7 @@
-import React from 'react'
+import { useState, useEffect } from "react";
 import './Home.css'
+
+import Slider from "react-slick";
 import { Link } from 'react-router-dom'
 import banner1 from '../../assets/banner1.webp'
 import banner2 from '../../assets/banner2.webp'
@@ -33,12 +35,30 @@ import special2 from '../../assets/special2.jpg'
 import special3 from '../../assets/special3.jpg'
 import special4 from '../../assets/special4.jpg'
 
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Testimonial from '../../component/Testimonial/Testimonial'
 
 const Home = () => {
+    const [slidesToShow, setSlidesToShow] = useState(8);
+    const [bestSlides, setBestSlides] = useState(5);
+
+    useEffect(() => {
+        const updateSlides = () => {
+            const width = window.innerWidth;
+            if (width <= 576) setSlidesToShow(2);
+            else if (width <= 768) setSlidesToShow(2);
+            else if (width <= 992) setSlidesToShow(4);
+            else if (width <= 1200) setSlidesToShow(6);
+            else setSlidesToShow(8);
+        };
+
+        updateSlides(); // run on mount
+        window.addEventListener("resize", updateSlides);
+
+        return () => window.removeEventListener("resize", updateSlides);
+    }, []);
+
     const banner = [
         {
             image: banner1,
@@ -57,7 +77,6 @@ const Home = () => {
         slidesToScroll: 1,
         dots: true,
         arrows: false,
-        mobileFirst: true,
         responsive: [
             { breakpoint: 992, settings: { slidesToShow: 1 } },
             { breakpoint: 768, settings: { slidesToShow: 1 } }
@@ -65,46 +84,66 @@ const Home = () => {
     };
     const gift_slider = {
         infinite: true,
-        autoplay: true,
-        slidesToShow: 8,
+        slidesToShow,
         slidesToScroll: 1,
-        dots: true,
+        autoplay: true,
+        autoplaySpeed: 3000,
         arrows: false,
-        mobileFirst: true,
-        responsive: [
-            { breakpoint: 1440, settings: { slidesToShow: 6 } },
-            { breakpoint: 1200, settings: { slidesToShow: 4 } },
-            { breakpoint: 768, settings: { slidesToShow: 2 } }
-        ]
+        dots: true,
+        pauseOnHover: false,
     };
+
+
+
+    useEffect(() => {
+        const updateBestSlides = () => {
+            const width = window.innerWidth;
+            if (width <= 768) setBestSlides(2);
+            else if (width <= 992) setBestSlides(3);
+            else if (width <= 1440) setBestSlides(4);
+            else setBestSlides(5);
+        };
+
+        updateBestSlides();
+        window.addEventListener("resize", updateBestSlides);
+        return () => window.removeEventListener("resize", updateBestSlides);
+    }, []);
+
     const best_seller__slider = {
         infinite: true,
-        autoplay: true,
-        slidesToShow: 5,
+        slidesToShow: bestSlides,
         slidesToScroll: 1,
+        autoplay: true,
         dots: true,
         arrows: false,
-        mobileFirst: true,
-        responsive: [
-            { breakpoint: 1440, settings: { slidesToShow: 4 } },
-            { breakpoint: 992, settings: { slidesToShow: 3 } },
-            { breakpoint: 768, settings: { slidesToShow: 2 } }
-        ]
     };
-    const special_slider = {
-        infinite: true,
-        autoplay: true,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        dots: true,
-        arrows: false,
-        mobileFirst: true,
-        responsive: [
-            { breakpoint: 1440, settings: { slidesToShow: 3 } },
-            { breakpoint: 992, settings: { slidesToShow: 2 } },
-            { breakpoint: 768, settings: { slidesToShow: 1 } }
-        ]
+
+
+  const [specialSlides, setSpecialSlides] = useState(3);
+
+  useEffect(() => {
+    const updateSpecialSlides = () => {
+      const width = window.innerWidth;
+      if (width <= 768) setSpecialSlides(1);
+      else if (width <= 992) setSpecialSlides(2);
+      else if (width <= 1440) setSpecialSlides(3);
+      else setSpecialSlides(3);
     };
+
+    updateSpecialSlides(); // run once on mount
+    window.addEventListener("resize", updateSpecialSlides);
+
+    return () => window.removeEventListener("resize", updateSpecialSlides);
+  }, []);
+
+  const special_slider = {
+    infinite: true,
+    autoplay: true,
+    slidesToShow: specialSlides,
+    slidesToScroll: 1,
+    dots: true,
+    arrows: false,
+  };
 
     const best = [
         {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import './ProductDetails.css'
 import bigcake from '../../assets/bigcake.webp'
@@ -13,20 +13,29 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const ProductDetails = () => {
+    const [bestSlides, setBestSlides] = useState(5);
+
+    useEffect(() => {
+        const updateBestSlides = () => {
+            const width = window.innerWidth;
+            if (width <= 768) setBestSlides(2);
+            else if (width <= 992) setBestSlides(3);
+            else if (width <= 1440) setBestSlides(4);
+            else setBestSlides(5);
+        };
+
+        updateBestSlides();
+        window.addEventListener("resize", updateBestSlides);
+        return () => window.removeEventListener("resize", updateBestSlides);
+    }, []);
 
     const best_seller__slider = {
         infinite: true,
-        autoplay: true,
-        slidesToShow: 5,
+        slidesToShow: bestSlides,
         slidesToScroll: 1,
+        autoplay: true,
         dots: true,
         arrows: false,
-        mobileFirst: true,
-        responsive: [
-            { breakpoint: 1440, settings: { slidesToShow: 4 } },
-            { breakpoint: 992, settings: { slidesToShow: 3 } },
-            { breakpoint: 768, settings: { slidesToShow: 2 } }
-        ]
     };
 
     const best = [

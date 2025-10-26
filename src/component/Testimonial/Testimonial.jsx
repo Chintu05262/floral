@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -20,19 +20,32 @@ const Testimonial = () => {
         },
 
     ]
-    const testimonial_slider = {
-        infinite: true,
-        autoplay: true,
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        dots: true,
-        arrows: false,
-        mobileFirst: true,
-        responsive: [
-            { breakpoint: 1200, settings: { slidesToShow: 1 } },
-            { breakpoint: 768, settings: { slidesToShow: 1 } }
-        ]
+ const [testimonialSlides, setTestimonialSlides] = useState(2);
+
+  useEffect(() => {
+    const updateTestimonialSlides = () => {
+      const width = window.innerWidth;
+      if (width <= 768) setTestimonialSlides(1);
+      else if (width <= 1200) setTestimonialSlides(1);
+      else setTestimonialSlides(2);
     };
+
+    updateTestimonialSlides(); // run once on mount
+    window.addEventListener("resize", updateTestimonialSlides);
+
+    return () => window.removeEventListener("resize", updateTestimonialSlides);
+  }, []);
+
+  const testimonial_slider = {
+    infinite: true,
+    autoplay: true,
+    slidesToShow: testimonialSlides,
+    slidesToScroll: 1,
+    dots: true,
+    arrows: false,
+    mobileFirst: true,
+  };
+
     return (
         <>
             <section className='testimonial_wrapper global_wrapper'>
